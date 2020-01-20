@@ -1,0 +1,817 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>创新方法工作平台</title>
+<!--添加页面框架-->
+<link rel="import" id="frame"
+	href="/webresources/common/html/appFrame.html">
+	
+<script type="text/javascript" src="js/buttonAction.js"></script>
+
+<!--  支持bootstrap-table的js、css -->
+<link rel="stylesheet" href="./bootstrap/bootstrap-table/bootstrap-table.css">
+<script type="text/javascript" src="./ace-master/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="./bootstrap/bootstrap-table/bootstrap-table.js"></script>
+<script type="text/javascript" src="./bootstrap/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript" src="./ace-master/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="./ace-master/assets/js/jquery.dataTables.bootstrap.min.js"></script>
+<script type="text/javascript"  src="./ace-master/assets/js/ace-elements.min.js"></script>
+<script type="text/javascript"  src="./ace-master/assets/js/bootstrap-editable.min.js"></script>
+
+<link rel="stylesheet" href="./ace-master/assets/css/bootstrap-editable.min.css">
+
+
+<script src="./js/lead_in.js"></script>
+<script src="./js/configure.js"></script>
+<script src="./js/use.js"></script>
+
+<script src="./js/localData.js"></script>
+
+</head>
+<body class="no-skin">
+
+	<!--添加多个分页-->
+	<div id="myCustomLi">
+		<li role="presentation" class="active"><a href="#home" id="hometab" aria-controls="home" role="tab" data-toggle="tab">
+			<i class="glyphicon glyphicon-home"></i> 导入</a></li>
+		<li role="presentation"><a href="#configure" id="configuretab" aria-controls="configure" role="tab" data-toggle="tab" onclick="problemConfig()">
+			<i class="glyphicon glyphicon-cog"></i> 配置</a></li>
+		<li role="presentation"><a href="#useuse" id="useusetab" aria-controls="useuse" role="tab" data-toggle="tab" onclick="useuse()">
+			<i class="glyphicon glyphicon-th"></i> 使用</a></li>
+			<li role="presentation"><a href="#analysisRes" id="analysisRestab" aria-controls="analysisRes" role="tab" data-toggle="tab">
+			<i class="glyphicon glyphicon-th"></i> 评估</a></li>
+
+	</div>
+	<div id="myCustomTab"> 
+		<div role="tabpanel" class="tab-pane active" id="home">
+				<div class="row">
+						
+						<div class="col-xs-12 col-sm-12 widget-container-col ui-sortable" id="widget-container-col-1">
+							<div class="widget-box ui-sortable-handle" id="widget-box-1">
+								<div class="widget-header">
+									<h4 class="widget-title">知识管理</h4>
+										
+									<div class="widget-toolbar">
+										 
+
+										<a href="#" data-action="collapse">
+											<i class="ace-icon fa fa-chevron-up"></i>
+										</a>
+										
+									</div>
+								</div>
+
+								<div class="widget-body" style="display: block;">
+									<div class="widget-main ace-scroll scroll-disabled" style="position: relative;"><div class="scroll-track" style="display: none;"><div class="scroll-bar" style="top: 0px;"></div></div><div class="scroll-content" style="">
+										
+										<p class="alert alert-info">
+											在导入过程中，需要掌握多创新方法使用的基本知识，为后续的创新方法使用打下基础  <a href="http://innovation.xjtu.edu.cn/InnovationTrain/index" style="font-size:20px; float:right;margin-right:100px;">在线培训</a>
+										</p>
+									</div></div>
+								</div>
+							</div>
+						</div>
+								
+						
+						<div class="col-xs-12 col-sm-12 widget-container-col ui-sortable" id="widget-container-col-1">
+							<div class="widget-box ui-sortable-handle" id="widget-box-1">
+								<div class="widget-header">
+									<h4 class="widget-title">难题管理 </h4>
+									
+									<div class="widget-toolbar">
+										<a href="#" data-action="fullscreen" class="orange2">
+											<i class="ace-icon fa fa-expand"></i>
+										</a>
+										
+										<a href="#" data-action="collapse">
+											<i class="ace-icon fa fa-chevron-up"></i>
+										</a>
+										
+									</div>
+								</div>
+								
+
+								<div class="widget-body" style="display: block;">
+									<div class="widget-main ace-scroll scroll-disabled" style="position: relative;">
+										
+										<!-- <p class="alert-info">
+											在导入过程中，需要收集企业存在的生产难题，确定生产难题范围
+										</p> -->
+										
+										
+										<div id="toolbar" class="btn-group btn-group-sm">
+											<button type="button" class="btn btn-info" onclick="addProblem()">
+												<i class="glyphicon glyphicon-plus"></i> 添加
+											</button>
+											<button type="button" class="btn btn-info"
+												style="margin-right: 40px" onclick="deleteProblem()">
+												<i class="glyphicon glyphicon-trash"></i> 删除
+											</button>
+											
+											<button type="button" class="btn btn-info" id="saveProject"
+												value="false" style="align: right" onclick="saveProject()">
+												<i class="glyphicon glyphicon-cloud"> 保存工程</i>
+											</button>
+											
+											<!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#saveAsModal" id="saveAsProject"
+												value="false" style="align: right" >
+												<i class="glyphicon glyphicon-cloud"> 另存为</i>
+											</button> -->
+											
+										</div>
+									
+										<table id="problemsTable" 
+											data-height=750 
+											data-toggle="table"
+											data-search="true" 
+											data-show-refresh="true" 
+											data-show-toggle="true"
+											data-toolbar="#toolbar" 
+											data-pagination="true" 
+											data-page-size=30
+											data-page-list=[10,30,50,All] 
+											data-side-pagination="client" >
+											 <thead>
+										       <tr>
+										       		<th data-field="state" data-checkbox="true"></th>
+										       		<th data-field="IdForDelete" data-visible="false">Id</th>
+										       		
+										           <th data-field="pdescriptoin">难题描述</th>
+										           <th data-field="ptype">难题类别</th>
+										           <th data-field="pscope">影响范围</th>
+										           <th data-field="pcost">经济损失（元）</th>
+										           <th data-field="ppeople">人员规模（个）</th>
+										           <th data-field="pperid">持续时间（天）</th>
+										           <th data-field="prush">紧急程度</th>
+										           <th data-field="prushVal" data-visible="false">紧急程度</th>
+										           
+										           <th data-field="pcomment">备注</th>
+										           <th data-field="action" data-formatter="actionFormatter"
+														data-events="actionEvents">编辑</th>
+										       </tr>
+										   </thead>
+										</table>
+								</div>
+							</div>
+							</div>
+						</div>
+						
+						
+						
+			
+			</div>
+		</div>
+
+	
+		<div role="tabpanel" class="tab-pane " id="configure">
+			<div class="row">
+						
+						<div class="col-xs-12 col-sm-12 widget-container-col ui-sortable" id="widget-container-col-1">
+							<div class="widget-box ui-sortable-handle" id="widget-box-1">
+								<div class="widget-header">
+									<h4 class="widget-title">难题管理</h4>
+										
+								</div>
+								<br>
+								<div class="widget-body" style="display: block;">
+									<div class="widget-main ace-scroll scroll-disabled" style="position: relative;">
+										<div class="scroll-track" style="display: none;"><div class="scroll-bar" style="top: 0px;"></div>
+										</div>
+										
+										<div class="scroll-content" style="">
+											<p class="alert alert-success" id="alreadyHaveProblems" style="display:none">
+												在导入过程中，已收集到企业的生存难题<font size="5" id ="allPro">0</font>个; 其中主动难题<font size="5" id ="pro1">0</font>个; 被动难题<font size="5" id ="pro2">0</font>个;
+												<a href="javascript:void(0)" onclick="problemSort()" style="font-size:20px; float:right;margin-right:100px;">难题智能排序</a>
+											</p>
+											
+											<p class="alert alert-danger" id="notHaveProblems" style="display:none">
+												没有添加生产难题，无法配置。——在导入过程中，需要完成对企业生产难题的提取与添加。
+												<a href="javascript:void(0)" onclick="backToHome()" style="font-size:20px; float:right;margin-right:100px;">继续添加生产难题</a>
+											</p>
+											
+										</div>
+								   </div>
+								   
+								</div>
+							</div>
+						
+						
+						</div>
+						
+						
+						
+						<div class="col-sm-10" id="recommentResult" style="display:none">
+								<div class="widget-box">
+									<div class="widget-header">
+										<h4 class="widget-title lighter smaller"><i class="ace-icon fa fa-comment blue"></i>排序结果</h4>
+										<span style="display:none" id="problemSortIndex"></span>
+									</div>
+
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<br>
+												
+											<div class="itemdiv dialogdiv">
+												
+												<div class="body">
+													<div class="name">
+														<h5 style="color:#337ab7" id="recommendNum1"></h5>
+													</div>
+													<div class="text" id="recommend1"> </div>
+                                                      <div class="tools" style="display:inline">
+														<div class="inline position-relative">
+															<button class="btn btn-minier bigger btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="">
+																<i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>操作
+															</button>
+
+															<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+																<li>
+																	<a href="javascript:void(0)" onclick="problemSelect(1)" class="tooltip-success" data-rel="tooltip"  >
+																		<span class="green"><i class="ace-icon fa fa-check bigger-110"></i>选择</span>
+																	</a>
+																</li>
+
+																<li>
+																	<a href="javascript:void(0)" onclick="problemCheck(1)" class="tooltip-error" data-rel="tooltip" >
+																		<span class="red"><i class="ace-icon fa fa-list-alt bigger-110"></i>查看</span>
+																	</a>
+																</li>
+															</ul>
+														</div>
+													</div>
+													
+												</div>
+											</div>
+										
+											<div class="itemdiv dialogdiv">
+												
+												<div class="body">
+													<div class="name">
+														<h5 style="color:#337ab7" id="recommendNum2"></h5>
+													</div>
+													<div class="text" id="recommend2"> </div>
+                                                      <div class="tools" style="display:inline">
+														<div class="inline position-relative">
+															<button class="btn btn-minier bigger btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="">
+																<i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>操作
+															</button>
+															
+															<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+																<li>
+																	<a href="javascript:void(0)" onclick="problemSelect(2)" class="tooltip-success" data-rel="tooltip"  >
+																		<span class="green"><i class="ace-icon fa fa-check bigger-110"></i>选择</span>
+																	</a>
+																</li>
+
+																<li>
+																	<a href="javascript:void(0)" onclick="problemCheck(2)" class="tooltip-error" data-rel="tooltip" >
+																		<span class="red"><i class="ace-icon fa fa-list-alt bigger-110"></i>查看</span>
+																	</a>
+																</li>
+															</ul>
+
+														</div>
+													</div>
+													
+												</div>
+											</div>
+
+											<div class="itemdiv dialogdiv">
+												
+												<div class="body">
+													<div class="name">
+														<h5 style="color:#337ab7" id="recommendNum3"></h5>
+													</div>
+													<div class="text" id="recommend3"> </div>
+                                                      <div class="tools" style="display:inline">
+														<div class="inline position-relative">
+															<button class="btn btn-minier bigger btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="">
+																<i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>操作
+															</button>
+															
+															<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+																<li>
+																	<a href="javascript:void(0)" onclick="problemSelect(3)" class="tooltip-success" data-rel="tooltip"  >
+																		<span class="green"><i class="ace-icon fa fa-check bigger-110"></i>选择</span>
+																	</a>
+																</li>
+
+																<li>
+																	<a href="javascript:void(0)" onclick="problemCheck(3)" class="tooltip-error" data-rel="tooltip" >
+																		<span class="red"><i class="ace-icon fa fa-list-alt bigger-110"></i>查看</span>
+																	</a>
+																</li>
+															</ul>
+
+														</div>
+													</div>
+													
+												</div>
+											</div>
+
+											<br>
+											
+											<div class="input-group">
+													<h4 class="widget-title lighter smaller">
+														<i class="ace-icon fa fa-asterisk green"></i>
+														目标难题
+													</h4>
+													<div class="name" style="margin-left:50px">
+														<span id="targetProblem"></span>
+														<span class="label label-info arrowed arrowed-in-right">推荐</span>
+													
+														<div class="tools" style="display:inline">
+															<div class="inline position-relative">
+																<button class="btn btn-minier bigger btn-danger" onclick="manualSelect()">
+																	<i class="ace-icon fa fa-info-circle icon-only bigger-140"></i> 重新选择
+																</button>
+															</div>
+														</div>
+													</div>
+													<br><br>
+												
+											</div>
+										
+										</div><!-- /.widget-main -->
+									</div><!-- /.widget-body -->
+								
+								
+								</div><!-- /.widget-box -->
+						
+						</div>
+			</div>
+		
+		</div>
+		
+		
+		<div role="tabpanel" class="tab-pane " id="useuse">
+			<div class="row">
+			
+				<div class="col-xs-12 col-sm-12 widget-container-col ui-sortable" id="widget-container-col-1">
+						<div class="widget-box ui-sortable-handle" id="widget-box-1">
+							<div class="widget-header">
+								<h4 class="widget-title">目标难题</h4>
+							</div>
+							<br>
+							<div class="widget-body" style="display: block;">
+								<div class="widget-main ace-scroll scroll-disabled" style="position: relative;">
+									
+										<p class="alert alert-danger" id="notConfProblems" style="display:none">
+											目标生产难题生产难题没有确定。——在配置过程中，需要确定企业的目标生产难题。
+											<a href="javascript:void(0)" onclick="backToConfigure()" style="font-size:20px; float:right;margin-right:100px;">选择目标生产难题</a>
+										</p>
+										<div class="input-group" id="alreadyConfProblems" style="display:none">
+											
+											<p class="alert alert-success" >
+												在使用过程中完成对生产难题的属性设置后便可以匹配到对应的创新方法。
+											</p>
+												<h4 class="widget-title lighter smaller">
+													<i class="ace-icon fa fa-asterisk green"></i>
+													目标难题
+												</h4>
+												
+												<div class="name" style="margin-left:50px">
+													<i class="ace-icon fa fa-quote-left"></i>
+													<br>
+													<span id="targetProblem1" style="font-size:18px;margin-left:16px"> </span>
+													
+													<div class="inline position-relative">
+														<button class="btn btn-mini bigger btn-info" onclick="setAttr()">
+															<i class="ace-icon fa fa-cog bigger-160"></i> 设置属性
+														</button>
+														<a href="javascript:void(0)" onclick="methodMatch()" style="font-size:20px; margin-left:150px;">创新方法智能匹配</a>
+														
+													</div>
+												</div>
+												<br>
+												<span id="problemAttrs" style="font-size:14px;margin-left:66px;color:blue"> </span>
+												
+										</div>
+										
+							   </div>
+							   
+							</div>
+							
+							
+							<div class="col-sm-10" id="recommentMethods" style="display:none">
+								<div class="widget-box">
+									<div class="widget-header">
+										<h4 class="widget-title lighter smaller"><i class="ace-icon fa fa-comment blue"></i>匹配结果</h4>
+										<span style="display:none" id="problemSortIndex"></span>
+									</div>
+
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<br>
+												
+											<div class="itemdiv dialogdiv">
+												
+												<div class="body">
+													<div class="name">
+														<h5 style="color:#337ab7" id="methodNum1"></h5>
+													</div>
+													<div class="text" id="method1"> </div>
+												</div>
+											</div>
+										
+											<div class="itemdiv dialogdiv">
+												
+												<div class="body">
+													<div class="name">
+														<h5 style="color:#337ab7" id="methodNum2"></h5>
+													</div>
+													<div class="text" id="method2"> </div>
+												</div>
+											</div>
+
+											<div class="itemdiv dialogdiv">
+												
+												<div class="body">
+													<div class="name">
+														<h5 style="color:#337ab7" id="methodNum3"></h5>
+													</div>
+													<div class="text" id="method3"> </div>
+												</div>
+											</div>
+
+											<br>
+											
+											<div class="input-group">
+													<h4 class="widget-title lighter smaller"><i class="ace-icon fa fa-arrows"></i> 重新选择</h4>
+													<div class="name" style="margin-left:50px">
+														
+														<div class="tools" style="display:inline">
+															<div class="inline position-relative">
+																<button class="btn btn-mini bigger btn-danger" onclick="manualSelect()">
+																	<i class="ace-icon fa fa-cogs  bigger-140"></i> 选择模板创新方法
+																</button>
+																
+																<button class="btn btn-mini bigger btn-danger" onclick="manualSelect()">
+																	<i class="ace-icon fa fa-cog  bigger-140"></i> 选择基础创新方法
+																</button>
+															</div>
+														</div>
+													</div>
+													<br><br>
+												
+											</div>
+										
+										</div><!-- /.widget-main -->
+									</div><!-- /.widget-body -->
+								
+								
+								</div><!-- /.widget-box -->
+						
+						</div>
+							
+							
+						</div>
+					
+						
+				</div>
+						
+						
+			</div>
+		
+		
+		</div>
+		
+	</div>	
+		
+	
+	
+	
+	
+	
+	<!-- Modal 添加难题 -->
+	<div class="modal fade" id="addProblem" tabindex="-1" role="dialog"
+			aria-labelledby="gaProgress">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel1">生产难题属性评价</h4>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+					<div class="col-lg-1"></div>
+				
+					<div class="col-lg-11">
+						<div class="col-lg-10">
+							<h5>(*)难题描述：</h5>
+							<textarea class="form-control" id="pdescriptoin" ></textarea>
+						</div>
+						
+						<div class="col-lg-10">
+	     					 <h5>(*)难题类别选择：</h5>
+								<div id="operationSelected1" class="radio"
+									style="position: relative; left: 100px">
+									<label> <input type="radio" name="optionsRadios1"
+										id="optionsRadios1" value="1" checked> 宏观主动难题
+									</label> 
+									<label> <input type="radio" name="optionsRadios1"
+										id="optionsRadios1" value="2"> 局部被动难题
+									</label> 
+								</div>
+					   </div>	
+					   <div class="col-lg-10">
+	     					 <h5>(*)影响范围选择：</h5>
+								<div id="operationSelected2" class="radio"
+									style="position: relative; left: 100px">
+									<label> <input type="radio" name="optionsRadios2"
+										id="optionsRadios2" value="1" checked> 车间局部
+									</label> 
+									<label> <input type="radio" name="optionsRadios2"
+										id="optionsRadios2" value="2" > 单车间
+									</label> 
+									<label> <input type="radio" name="optionsRadios2"
+										id="optionsRadios2" value="3"> 多车间
+									</label>
+									<label> <input type="radio" name="optionsRadios2"
+										id="optionsRadios2" value="4"> 企业层面
+									</label> 
+								</div>
+					   </div>				
+						<div class="col-lg-10">
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">经济损失（元）</span> 
+								<input type="text"	class="form-control" id="pcost" value="100" >
+							</div>
+						</div>
+						
+						<div class="col-lg-10">
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">人员规模（个）</span> 
+								<input type="text"	class="form-control" id="ppeople1" value="10" style="text-align:center">
+								<span class="input-group-addon">-</span> 
+								<input type="text"	class="form-control" id="ppeople2" value="20" style="text-align:center">
+							</div>
+						</div>
+						
+						<div class="col-lg-10">
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">持续时间（天）</span> 
+								<input type="text"	class="form-control" id="pperid" value="100" >
+							</div>
+						</div>
+						
+						<div class="col-lg-10">
+							<br>
+							<div>
+								<h5>难题紧急程度：</h5>
+							  	 <input type="range" name="range_speed" id="range_speed" value="10" oninput="changeSpeed()" style="display:inline"/>
+							   <span id="rushValue" style="display:inline">很低</span>
+							</div> 
+							
+						</div>
+						
+						<div class="col-lg-10">
+							<br>
+							<div>
+								<h5>备注：</h5>
+							  	<textarea class="form-control" id="comment" ></textarea>
+							</div>
+							
+						</div>
+					
+					</div>
+					
+				
+				</div>
+			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id ="problemBtn">确定</button>
+				<button type="button"  class="btn btn-primary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+	<!-- Modal 选择难题 -->
+	<div class="modal fade" id="selectProblem" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">选择目标生产难题</h4>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+						<table id="problemsTable1" 
+								data-height=600 
+								data-toggle="table" >
+								 <thead>
+							       <tr>
+							           <th data-field="pdescriptoin1">难题描述</th>
+							           <th data-field="priorityVal" >推荐度</th>
+							       	   <th data-field="state" data-checkbox="true"></th>
+							       </tr>
+							   </thead>
+							</table>
+				</div>
+				<br><br>
+			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick ="manualSelectConfirm()">确定</button>
+				<button type="button"  class="btn btn-primary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+	
+	<!-- Modal 配置难题 -->
+	<div class="modal fade" id="confProblems" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel1">生产难题属性设置</h4>
+				</div>
+				<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12">
+						<div id="comment-tab" class="tab-pane active">
+							<div class="comments ace-scroll" style="position: relative;">
+								<div class="scroll-content" style="max-height: 600px;">
+									<div class="itemdiv commentdiv">
+	
+										<div class="body">
+											<div class="name">
+												<a href="#" style="font-size:16px" >已选择目标生产难题</a>
+											</div>
+											<br>
+											<div class="text" >
+												<i class="ace-icon fa fa-quote-left"></i>
+												<span id="targetProblem2"></span>
+											</div>
+										</div>
+									
+									</div>
+								</div>
+							</div>
+					  </div>
+					  
+					<div class="widget-box widget-color-blue2">
+						<div class="widget-header">
+							<h4 class="widget-title lighter smaller">设置难题属性</h4>
+						</div>
+
+						<div class="widget-body">
+							<div class="widget-main padding-8">
+								<ul id="tree1" class="tree tree-unselectable" role="tree">
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+					  
+				</div>
+					
+				
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onclick="confProblemsConfirm()">确定</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	
+	
+	
+	<!-- Modal 等待 -->
+	<div class="modal fade in" id=waitingForComplete tabindex="-1" role="dialog" >
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title">等待排序完成...</h4>
+				</div>
+				<div class="modal-body">
+					<div id="waiting" style="display: none;">
+						<div style="text-align: center">
+							<span style="font-size: 20px">排序中</span> <img src="./css/images/loader.gif" class="loading">
+						</div>
+					</div>
+					<div id="completed" style="display: inline;">
+						<div style="text-align: center">
+							<span style="font-size: 20px">排序完成</span> <img src="./css/images/ok.png" class="loading">
+						</div>
+						<div style="text-align: right">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+	<!-- Modal 保存工程-->
+	 <div class="modal fade" id="inputProjectName" tabindex="-1" role="dialog"
+		aria-labelledby="inputProjectName">
+		
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">保存工程</h4>
+				</div>
+				<div class="modal-body">
+					<ul>
+						<li class="active">
+							<h5>请输入工程名称</h5>
+							<input type="text" class="form-control" id="projectName" />
+						</li>
+					</ul>
+					
+					<ul>
+						<li class="active">
+							<h5>备注信息</h5>
+							<input type="text" class="form-control" id="memoInfo" />
+						</li>
+					</ul>
+				
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" onclick="save2DataBase()">确定</button>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+
+
+	
+	<!-- 
+	<div id="helpHtml">
+	
+	
+		  <div class="page-header">
+				<h1>
+					  生产线平衡使用说明
+				</h1>
+		  </div>
+		  <div class="alert alert-block alert-success" id="appHelp">
+				<div class="helpClass">
+					  <p class="helpP">
+							<i class="ace-icon fa fa-check green"></i>
+							<strong><big>使用流程：</big></strong><br/>
+							<strong>1、生产信息录入</strong><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1）建立工程项目<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./files/helpImg/step1.png" width="500px" height="300px"><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2）添加工程数据<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./files/helpImg/step2.png" width="500px" height="300px"><br/>
+							<strong>2、分析改进</strong><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./files/helpImg/step2.png" width="500px" height="300px"><br/>
+							<strong>3、改进结果</strong><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./files/helpImg/step4.png" width="500px" height="300px"><br/>
+							<strong>4、查看项目</strong><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./files/helpImg/step5.png" width="500px" height="300px"><br/>
+							<strong>5、注意事项</strong><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.表格填写方式必须按照下载的模板结构进行填写（非常重要），模板中的分隔符均为英文；<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.如果是第一道工序，则其紧前工序为0，其他紧前工序需用英文逗号分隔；<br/>
+					  <p>
+				</div>
+		  </div>
+	</div>
+	
+	 -->
+	
+	
+<script src="./ace-master/assets/js/tree.min.js"></script>
+<script src="./ace-master/assets/js/ace-extra.min.js"></script>
+
+
+</body>
+</html>

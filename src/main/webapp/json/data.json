@@ -1,0 +1,89 @@
+﻿//
+{  "data": {
+				"filed" : {"text": "领域属性", 
+				           "type": "folder",
+						   "children" : {
+								"quality" : {"text": "质量难题",
+											 "type": "folder",
+											"children" : {
+												"qualityPlan" : {"text": "质量计划", "type": "item"},
+												"qualityEnsure" : {"text": "质量保证", "type": "item"},
+												"qualityControl" : {"text": "质量控制", "type": "item"}
+												}
+											},
+								"design" : {"text": "设计难题",
+											"type": "folder",
+											"children" : {
+												"functionDesign" : {"text": "功能设计", "type": "item"},
+												"productDesign" : {"text": "产品设计", "type": "item"},
+												"systemDesign" : {"text": "系统设计", "type": "item"}
+												}
+											},
+								"efficiency" : {"text": "效率难题",
+												"type": "folder",
+												"children" : {
+													"fieldManagement" : {"text": "现场管理", "type": "item"},
+													"layout" : {"text": "生产布局", "type": "item"},
+													"logistics" : {"text": "物流信息", "type": "item"},
+													"waste" : {"text": "生产浪费", "type": "item"}
+													}
+											},
+								"resources" : {"text": "资源难题", 
+											   "type": "folder",
+											   "children" : {
+													"humanResource" : {"text": "人力资源", "type": "item"},
+													"deviceResource" : {"text": "设备资源", "type": "item"},
+													"techResource" : {"text": "技术资源", "type": "item"},
+													"materielResource" : {"text": "物料资源", "type": "item"},
+													"serviceRssource" : {"text": "服务资源", "type": "item"}
+													}
+											},
+								"manager" : {"text": "管理难题", 
+											 "type": "folder",
+											 "children" : {
+													"planManager" : {"text": "计划管理", "type": "item"},
+													"produceManager" : {"text": "生产管理", "type": "item"},
+													"materielManger" : {"text": "物资管理", "type": "item"},
+													"qualityManager" : {"text": "质量管理", "type": "item"},
+													"costmanger" : {"text": "成本管理", "type": "item"}
+												}
+											}
+								}
+							
+							
+					},
+				"lifecycle" : {"text": "产品生命周期",
+							   "type": "folder",
+							   "children" : {
+									"design" : {"text": "研发设计", "type": "item"},
+									"manufacture" : {"text": "制造", "type": "item"},
+									"peration " : {"text": "运维", "type": "item"},
+									"assemble " : {"text": "整机装配", "type": "item"}
+								}},
+				"organizational" : {"text": "生产组织过程", 
+									"type": "folder",
+									"children" : {
+										"apartments-rentals" : {"text": "离散生产", "type": "item"},
+										"office-space-rentals" : {"text": "流程生产", "type": "item"},
+										"vacation-rentals" : {"text": "混合生产", "type": "item"}
+										}
+									},
+				"batch" : {"text": "生产批次", 
+						   "type": "folder",
+						   "children" : {
+									"apartments" : {"text": "大批量生产", "type": "item"},
+									"villas" : {"text": "小批量生产", "type": "item"},
+									"plots" : {"text": "单件生产", "type": "item"}
+								}
+						},
+				"mode" : {"text": "生产模式",
+						  "type": "folder",
+						  "children" : {
+								"cats" : {"text": "自制生产", "type": "item"},
+								"dogs" : {"text": "外购生产", "type": "item"},
+								"horses" : {"text": "外协生产", "type": "item"}
+								}
+						}
+			}
+			
+	}	
